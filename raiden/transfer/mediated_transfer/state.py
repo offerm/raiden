@@ -628,8 +628,10 @@ class TransferDescriptionWithSecretState(State):
             initiator: InitiatorAddress,
             target: TargetAddress,
             secret: Secret,
+            secret_hash: SecretHash = None,
     ) -> None:
-        secrethash = sha3(secret)
+        if secret_hash is None:
+            secret_hash = sha3(secret)
 
         self.payment_network_identifier = payment_network_identifier
         self.payment_identifier = payment_identifier
@@ -638,7 +640,7 @@ class TransferDescriptionWithSecretState(State):
         self.initiator = initiator
         self.target = target
         self.secret = secret
-        self.secrethash = secrethash
+        self.secrethash = secret_hash
 
     def __repr__(self):
         return (
