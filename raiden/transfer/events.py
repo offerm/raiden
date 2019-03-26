@@ -2,8 +2,6 @@ from typing import TYPE_CHECKING
 
 from eth_utils import to_bytes, to_canonical_address, to_checksum_address, to_hex
 
-from eth_utils import to_canonical_address, to_checksum_address
-
 from raiden.constants import UINT256_MAX
 from raiden.transfer.architecture import (
     ContractSendEvent,

@@ -415,31 +415,14 @@ def options(func):
         option_group(
             'Hash Resolver options',
             option(
-                '--resolver-address',
+                '--resolver-endpoint',
                 help=(
-                    '"host:port" of the resolver server that is used to resolve '
-                    'a payment hash to a secret'
-                ),
-                default='localhost:50051',
-                type=str,
-                show_default=True,
-            ),
-            option(
-                '--resolver-crt-file',
-                help=(
-                    'Text file containing the The crt file includes the '
-                    'root certificate that is used to authenticate the '
-                    'resolver server'
+                    'URL of the resolver server that is used to resolve '
+                    'a payment hash to a secret. '
+                    'Accepts a protocol prefix (http:// or https://) with optional port'
                 ),
                 default=None,
-                type=click.Path(
-                    exists=True,
-                    dir_okay=False,
-                    file_okay=True,
-                    writable=False,
-                    resolve_path=True,
-                    allow_dash=True,
-                ),
+                type=str,
                 show_default=True,
             ),
         ),

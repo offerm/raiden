@@ -208,8 +208,7 @@ def run_app(
         pathfinding_service_address,
         pathfinding_max_paths,
         enable_monitoring,
-        resolver_address,
-        resolver_crt_file,
+        resolver_endpoint,
         routing_mode,
         config=None,
         extra_config=None,
@@ -233,7 +232,6 @@ def run_app(
 
     (listen_host, listen_port) = split_endpoint(listen_address)
     (api_host, api_port) = split_endpoint(api_address)
-    (resolver_host, resolver_port) = split_endpoint(resolver_address)
 
     config['transport']['udp']['host'] = listen_host
     config['transport']['udp']['port'] = listen_port
@@ -242,9 +240,7 @@ def run_app(
     config['web_ui'] = rpc and web_ui
     config['api_host'] = api_host
     config['api_port'] = api_port
-    config['resolver_host'] = resolver_host
-    config['resolver_port'] = resolver_port
-    config['resolver_crt_file'] = resolver_crt_file
+    config['resolver_endpoint'] = resolver_endpoint
     if mapped_socket:
         config['socket'] = mapped_socket.socket
         config['transport']['udp']['external_ip'] = mapped_socket.external_ip
@@ -401,6 +397,7 @@ def run_app(
 
     user_deposit = None
     should_use_user_deposit = (
+        True or
         environment_type == Environment.DEVELOPMENT and
         ID_TO_NETWORKNAME.get(node_network_id) != 'smoketest' and
         CONTRACT_USER_DEPOSIT in services_contracts
