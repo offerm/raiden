@@ -397,7 +397,6 @@ def run_app(
 
     user_deposit = None
     should_use_user_deposit = (
-        True or
         environment_type == Environment.DEVELOPMENT and
         ID_TO_NETWORKNAME.get(node_network_id) != 'smoketest' and
         CONTRACT_USER_DEPOSIT in services_contracts
