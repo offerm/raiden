@@ -32,7 +32,16 @@ def reveal_secret_with_resolver(
         if raiden.config['resolver_endpoint'] is None:
             return False
 
-        request = {"secret_hash": to_hex(secret_request_event.secrethash)[2:]}
+        request = {
+            "secret_hash": to_hex(secret_request_event.secrethash)[2:],
+            "amount": secret_request_event.amount,
+            "payment_identifier": secret_request_event.payment_identifier,
+            "payment_sender": to_hex(secret_request_event.recipient)[2:],
+            "expiration": secret_request_event.expiration,
+            "payment_recipient": to_hex(raiden.address)[2:],
+            "reveal_timeout": raiden.config['reveal_timeout'],
+            "settle_timeout": raiden.config['settle_timeout'],
+        }
         response = requests.post(raiden.config['resolver_endpoint'], json=request)
 
         if response is None or response.status_code != 200:
