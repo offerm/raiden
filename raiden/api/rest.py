@@ -986,21 +986,21 @@ class RestAPI:
         if isinstance(result, EventPaymentSentFailed):
             return api_error(
                 errors="Payment couldn't be completed "
-                "(insufficient funds, no route to target or target offline). " +
-                result.reason,
+                "(insufficient funds, no route to target or target offline). " + result.reason,
                 status_code=HTTPStatus.CONFLICT,
             )
 
         assert isinstance(result, EventPaymentSentSuccess)
         payment = {
             "initiator_address": self.raiden_api.address,
-            "registry_address': registry_address,
+            "registry_address": registry_address,
             "token_address": token_address,
             "target_address": target_address,
             "amount": amount,
             "identifier": identifier,
-            'secret": to_hex(result.secret),
-            "secret_hash": to_hex(sha3(result.secret)),
+            "secret": to_hex(result.secret),
+            "secret_hash": to_hex(result.secrethash),
+            "hashalgo": result.hashalgo.name,
         }
         result = self.payment_schema.dump(payment)
         return api_response(result=result.data)
