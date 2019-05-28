@@ -1180,7 +1180,7 @@ class ReceiveUnlock(BalanceProofStateChange):
         if hashalgo == HashAlgo.SHA3:
             secrethash = sha3(secret)
         elif hashalgo == HashAlgo.SHA256:
-            secrethash = sha256(to_hex(secret)[2:].encode()).digest()
+            secrethash = sha256(secret).digest()
         else:
             secrethash = EMPTY_HASH
 

@@ -21,7 +21,9 @@ def resolve(request):
 
     x_secret = "0x2ff886d47b156de00d4cad5d8c332706692b5b572adfe35e6d2f65e92906806e"
     # x_secret_hash = to_hex(sha3(to_bytes(hexstr=x_secret)))
-    x_secret_hash = to_hex(sha256(x_secret[2:].encode()).digest())
+    # x_secret_hash = to_hex(sha256(x_secret[2:].encode()).digest())
+    x_secret_hash = to_hex(sha256(to_bytes(hexstr=x_secret)).digest())
+
     # '0x1c8f640789059e0d200dc69cca1967dc0498760374de99a24eb7221c9a5edb6e'
     if request["secrethash"] == x_secret_hash:
         preimage = {"secret": x_secret}

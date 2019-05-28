@@ -728,7 +728,7 @@ class Unlock(EnvelopeMessage):
         if self.hashalgo == HashAlgo.SHA3:
             return sha3(self.secret)
         elif self.hashalgo == HashAlgo.SHA256:
-            return sha256(to_hex(self.secret)[2:].encode()).digest()
+            return sha256(self.secret).digest()
         else:
             return EMPTY_HASH
 
@@ -847,7 +847,7 @@ class RevealSecret(SignedRetrieableMessage):
         if self.hashalgo == HashAlgo.SHA3:
             return sha3(self.secret)
         elif hashalgo == HashAlgo.SHA256:
-            return sha256(to_hex(self.secret)[2:].encode()).digest()
+            return sha256(self.secret).digest()
         else:
             return EMPTY_HASH
 

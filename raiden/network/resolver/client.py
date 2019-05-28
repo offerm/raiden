@@ -43,7 +43,7 @@ def reveal_secret_with_resolver(
         return False
 
     hexsecret = response.json()["secret"]
-    secret = hexsecret[2:].encode()
+    secret = to_bytes(hexstr=hexsecret)
     secrethash = secret_request_event.secrethash
 
     if sha3(secret) == secrethash:
@@ -54,7 +54,7 @@ def reveal_secret_with_resolver(
         return False
 
     state_change = ReceiveSecretReveal(
-        to_bytes(hexstr=hexsecret), secret_request_event.recipient, hashalgo
+        secret, secret_request_event.recipient, hashalgo
     )
     raiden.handle_and_track_state_change(state_change)
     return True
