@@ -504,14 +504,14 @@ class RaidenAPI:
 
         balance = token.balance_of(self.raiden.address)
 
-        functions = token_network_proxy.proxy.contract.functions
-        deposit_limit = functions.channel_participant_deposit_limit().call()
-
-        if total_deposit > deposit_limit:
-            raise DepositOverLimit(
-                f"The additional deposit of {addendum} will exceed the "
-                f"channel participant limit of {deposit_limit}"
-            )
+        # functions = token_network_proxy.proxy.contract.functions
+        # deposit_limit = functions.channel_participant_deposit_limit().call()
+        #
+        # if total_deposit > deposit_limit:
+        #     raise DepositOverLimit(
+        #         f"The additional deposit of {addendum} will exceed the "
+        #         f"channel participant limit of {deposit_limit}"
+        #     )
 
         # If this check succeeds it does not imply the the `deposit` will
         # succeed, since the `deposit` transaction may race with another
