@@ -309,7 +309,7 @@ class MatrixTransport(Runnable):
         self._stop_event.set()
 
         self._global_send_event = Event()
-        self._prioritize_global_messages = True
+        self._prioritize_global_messages = False
 
         self._address_mgr: UserAddressManager = UserAddressManager(
             client=self._client,
