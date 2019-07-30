@@ -28,6 +28,7 @@ from raiden.utils.typing import (
     InitiatorAddress,
     InitiatorTransfersMap,
     List,
+    LockTimeout,
     MessageID,
     Optional,
     PaymentAmount,
@@ -556,6 +557,7 @@ class TransferDescriptionWithSecretState(State):
         "target",
         "secret",
         "secrethash",
+        "locktimeout",
     )
 
     def __init__(
@@ -569,6 +571,7 @@ class TransferDescriptionWithSecretState(State):
         target: TargetAddress,
         secret: Secret,
         secrethash: SecretHash = None,
+        locktimeout: LockTimeout = None,
     ) -> None:
 
         if secrethash is None:
@@ -583,6 +586,7 @@ class TransferDescriptionWithSecretState(State):
         self.target = target
         self.secret = secret
         self.secrethash = secrethash
+        self.locktimeout = locktimeout
 
     def __repr__(self):
         return (
@@ -593,6 +597,7 @@ class TransferDescriptionWithSecretState(State):
             f"allocated_fee:{self.allocated_fee} "
             f"target:{pex(self.target)} "
             f"secrethash:{pex(self.secrethash)}"
+            f"locktimeout:{self.locktimeout}"
             f">"
         )
 
@@ -608,6 +613,7 @@ class TransferDescriptionWithSecretState(State):
             and self.target == other.target
             and self.secret == other.secret
             and self.secrethash == other.secrethash
+            and self.locktimeout == other.locktimeout
         )
 
     def __ne__(self, other: Any) -> bool:
@@ -624,6 +630,7 @@ class TransferDescriptionWithSecretState(State):
             "target": to_checksum_address(self.target),
             "secret": serialize_bytes(self.secret),
             "secrethash": serialize_bytes(self.secrethash),
+            "locktimeout": str(self.locktimeout),
         }
 
     @classmethod
@@ -632,6 +639,14 @@ class TransferDescriptionWithSecretState(State):
             secrethash = deserialize_secret_hash(data["secrethash"])
         else:
             secrethash = sha3(deserialize_secret(data["secret"]))
+
+        if "locktimeout" in data:
+            if data["locktimeout"] == "None":
+                locktimeout = None
+            else:
+                locktimeout=LockTimeout(int(data["locktimeout"]))
+        else:
+            locktimeout = None
 
         restored = cls(
             payment_network_identifier=to_canonical_address(data["payment_network_identifier"]),
@@ -643,6 +658,7 @@ class TransferDescriptionWithSecretState(State):
             target=to_canonical_address(data["target"]),
             secret=deserialize_secret(data["secret"]),
             secrethash=secrethash,
+            locktimeout=locktimeout,
         )
 
         return restored

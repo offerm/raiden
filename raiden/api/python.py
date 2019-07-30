@@ -56,6 +56,7 @@ from raiden.utils.typing import (
     ChannelID,
     Dict,
     List,
+    LockTimeout,
     LockedTransferType,
     NetworkTimeout,
     Optional,
@@ -707,6 +708,7 @@ class RaidenAPI:
         transfer_timeout: int = None,
         secret: Secret = None,
         secrethash: SecretHash = None,
+        locktimeout: LockTimeout=None,
     ):
         """ Do a transfer with `target` with the given `amount` of `token_address`. """
         # pylint: disable=too-many-arguments
@@ -719,6 +721,7 @@ class RaidenAPI:
             identifier=identifier,
             secret=secret,
             secrethash=secrethash,
+            locktimeout=locktimeout,
         )
         payment_status.payment_done.wait(timeout=transfer_timeout)
         return payment_status
@@ -732,6 +735,7 @@ class RaidenAPI:
         identifier: PaymentID = None,
         secret: Secret = None,
         secrethash: SecretHash = None,
+        locktimeout: LockTimeout = None,
     ):
 
         if not isinstance(amount, int):
@@ -798,6 +802,7 @@ class RaidenAPI:
             identifier=identifier,
             secret=secret,
             secrethash=secrethash,
+            locktimeout=locktimeout,
         )
         return payment_status
 

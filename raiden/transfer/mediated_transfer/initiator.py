@@ -206,6 +206,8 @@ def next_channel_from_routes(
         if transfer_amount > distributable:
             continue
 
+        # todo: check lock_timeout
+
         if channel.is_valid_amount(channel_state.our_state, transfer_amount):
             return channel_state
 
@@ -274,7 +276,11 @@ def send_lockedtransfer(
     """ Create a mediated transfer using channel. """
     assert channel_state.token_network_identifier == transfer_description.token_network_identifier
 
+    # TODO: check locktimeout against channel.settle_timeout and reveal_timeout.
+
     lock_expiration = get_initial_lock_expiration(block_number, channel_state.reveal_timeout)
+    if transfer_description.locktimeout:
+        lock_expiration = BlockExpiration(block_number + transfer_description.locktimeout)
 
     # The payment amount and the fee amount must be included in the locked
     # amount, as a guarantee to the mediator that the fee will be claimable

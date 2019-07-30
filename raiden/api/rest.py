@@ -944,6 +944,7 @@ class RestAPI:
         identifier: typing.PaymentID,
         secret: typing.Secret,
         secret_hash: typing.SecretHash,
+        lock_timeout: typing.LockTimeout,
     ):
         log.debug(
             "Initiating payment",
@@ -955,6 +956,7 @@ class RestAPI:
             payment_identifier=identifier,
             secret=secret,
             secret_hash=secret_hash,
+            lock_timeout=lock_timeout,
         )
 
         if identifier is None:
@@ -969,6 +971,7 @@ class RestAPI:
                 identifier=identifier,
                 secret=secret,
                 secrethash=secret_hash,
+                locktimeout=lock_timeout,
             )
         except (
             InvalidAmount,

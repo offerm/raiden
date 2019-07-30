@@ -155,6 +155,10 @@ Signature = NewType("Signature", T_Signature)
 T_TransactionHash = bytes
 TransactionHash = NewType("TransactionHash", T_TransactionHash)
 
+T_LockTimeout = int
+LockTimeout = NewType("LockTimeout", T_LockTimeout)
+
+
 # This should be changed to `Optional[str]`
 SuccessOrError = Tuple[bool, Optional[str]]
 

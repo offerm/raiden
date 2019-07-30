@@ -250,6 +250,7 @@ class PaymentSchema(BaseSchema):
     secret = fields.String(missing=None)
     secret_hash = fields.String(missing=None)
     hashalgo = fields.String(missing=None)
+    lock_timeout = fields.Integer(missing=None)
 
     class Meta:
         strict = True
