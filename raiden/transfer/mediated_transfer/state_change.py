@@ -329,7 +329,7 @@ class ReceiveSecretReveal(AuthenticatedSenderStateChange):
         instance = cls(
             secret=Secret(deserialize_bytes(data["secret"])),
             sender=to_canonical_address(data["sender"]),
-            hashalgo=data["hashalgo"],
+            hashalgo=HashAlgo(data["hashalgo"]),
         )
         instance.secrethash = deserialize_bytes(data["secrethash"])
         return instance
