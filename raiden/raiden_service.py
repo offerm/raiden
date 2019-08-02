@@ -872,6 +872,7 @@ class RaidenService(Runnable):
                     ),
                     payment_done=AsyncResult(),
                     secrethash=transfer_description.secrethash,
+                    locktimeout=initiator.transfer_description.locktimeout,
                 )
 
     def _initialize_messages_queues(self, chain_state: ChainState):
