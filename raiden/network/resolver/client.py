@@ -7,12 +7,15 @@ from eth_utils import to_bytes, to_hex
 from raiden.raiden_service import RaidenService
 from raiden.transfer.mediated_transfer.events import SendSecretRequest
 from raiden.transfer.mediated_transfer.state_change import ReceiveSecretReveal
+from raiden.transfer.state import ChainState
 from raiden.utils import sha3
 from raiden.utils.typing import HashAlgo
 
 
 def reveal_secret_with_resolver(
-    raiden: RaidenService, secret_request_event: SendSecretRequest
+    raiden: RaidenService,
+    chain_state: ChainState,
+    secret_request_event: SendSecretRequest,
 ) -> bool:
 
     if "resolver_endpoint" not in raiden.config:
@@ -30,6 +33,8 @@ def reveal_secret_with_resolver(
         "payment_sender": to_hex(secret_request_event.recipient),
         "expiration": secret_request_event.expiration,
         "payment_recipient": to_hex(raiden.address),
+        "chain_id": chain_state.chain_id,
+        "chain_height": chain_state.block_number,
         "reveal_timeout": raiden.config["reveal_timeout"],
         "settle_timeout": raiden.config["settle_timeout"],
     }
